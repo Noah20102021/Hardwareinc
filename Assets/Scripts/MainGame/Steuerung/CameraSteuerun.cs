@@ -6,11 +6,12 @@ public class CameraSteuerun : MonoBehaviour
 {
     public Rigidbody2D CameraRiG;
     public float Speed;
-    public float zoomsize = 5;
+    public float zoomsize = 17;
     // Start is called before the first frame update
     void Start()
     {
         Speed = 20;
+        zoomsize = 17;
     }
 
     // Update is called once per frame
