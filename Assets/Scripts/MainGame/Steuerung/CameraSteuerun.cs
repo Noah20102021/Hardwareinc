@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraSteuerun : MonoBehaviour
@@ -7,17 +8,24 @@ public class CameraSteuerun : MonoBehaviour
     public Rigidbody2D CameraRiG;
     public float Speed;
     public float zoomsize = 17;
+    public GameObject Cam;
+    public float rot = 0;
     // Start is called before the first frame update
     void Start()
     {
-        Speed = 20;
+        Speed = 30;
         zoomsize = 17;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90+rot));
+            rot = rot + 90;
+        }
         if (Input.GetKey(KeyCode.W))
         {
             transform.position = new Vector3(transform.position.x, 
@@ -39,14 +47,14 @@ public class CameraSteuerun : MonoBehaviour
                 transform.position.y, transform.position.z);
         }
 
-        if(Input.GetAxis("Mouse ScrollWheel") > 0) 
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && !Input.GetKey(KeyCode.LeftControl)) 
         {
             if (zoomsize > 2)
             {
                 zoomsize -= 1;
             }
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 && !Input.GetKey(KeyCode.LeftControl))
         {
             if (zoomsize < 50)
             {
@@ -54,5 +62,20 @@ public class CameraSteuerun : MonoBehaviour
             }
         }
         GetComponent<Camera>().orthographicSize = zoomsize;
+
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 && Input.GetKey(KeyCode.LeftControl))
+        {
+            if (Speed > 1)
+            {
+                Speed -= 1;
+            }
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && Input.GetKey(KeyCode.LeftControl))
+        {
+            if (Speed < 50)
+            {
+                Speed += 1;
+            }
+        }
     }
 }

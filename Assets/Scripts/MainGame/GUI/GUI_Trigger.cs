@@ -1,17 +1,22 @@
+using DevionGames.UIWidgets;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GUI_Trigger : MonoBehaviour
 {
     public GameObject ESCMenue;
     public bool ESCMenueOpen;
+    public GameObject Finanzen;
     // Start is called before the first frame update
     void Start()
     {
         ESCMenue.SetActive(false);
         ESCMenueOpen = false;
+        
     }
 
     // Update is called once per frame
@@ -40,5 +45,9 @@ public class GUI_Trigger : MonoBehaviour
     public void Menue()
     {
         SceneManager.LoadScene("Menue");
+    }
+    public void FinanzenOpen()
+    {
+        Finanzen.GetComponent<UIWidget>().Show();
     }
 }
