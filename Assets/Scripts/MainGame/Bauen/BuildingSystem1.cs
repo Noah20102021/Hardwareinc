@@ -11,8 +11,8 @@ public class BuildingSystem : MonoBehaviour
     public GameObject buildingPrefab;
     private GameObject currentBuilding;
     public float gridSize = 15f;
-    public int spielbereichMin=-1500;
-    public int spielbereichMax=1500;
+    public int spielbereichMin=-3000;
+    public int spielbereichMax=3000;
     public int gridhöhe=1;
     public bool PlaceOn = false;
     private bool GO = false;
