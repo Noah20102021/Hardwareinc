@@ -19,7 +19,6 @@ public class Anzeigen : MonoBehaviour
     {
         string Test;
         Test = Speichern.Kontostand.ToString();
-        Debug.Log(Test);
         KontostandTMP.text = Test;
     }
 }
