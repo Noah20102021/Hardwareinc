@@ -546,11 +546,11 @@ Transform:
   m_GameObject: {fileID: 138827944}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1184.58, y: -685.26, z: 0}
+  m_LocalPosition: {x: -1194.965, y: -684.9923, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1050877163}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &413050301
 GameObject:
@@ -1993,7 +1993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1050877163}
   m_Layer: 0
-  m_Name: Haus
+  m_Name: Beckgrund
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2014,7 +2014,6 @@ Transform:
   m_Children:
   - {fileID: 1696136500}
   - {fileID: 1107970795}
-  - {fileID: 138827946}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1094013794
@@ -2147,7 +2146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1107970795}
   - component: {fileID: 1107970796}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3862,7 +3861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1696136500}
   - component: {fileID: 1696136501}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4156,7 +4155,7 @@ Transform:
   m_GameObject: {fileID: 1855464417}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.08, y: -18.23, z: 0}
+  m_LocalPosition: {x: -75.26, y: -16.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8225,3 +8224,4 @@ SceneRoots:
   - {fileID: 837705011}
   - {fileID: 413050303}
   - {fileID: 2044847211}
+  - {fileID: 138827946}
