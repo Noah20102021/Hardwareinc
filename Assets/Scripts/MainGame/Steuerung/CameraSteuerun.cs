@@ -56,7 +56,7 @@ public class CameraSteuerun : MonoBehaviour
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0 && !Input.GetKey(KeyCode.LeftControl))
         {
-            if (zoomsize < 50)
+            if (zoomsize < 200)
             {
                 zoomsize += 1;
             }
@@ -72,7 +72,7 @@ public class CameraSteuerun : MonoBehaviour
         }
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && Input.GetKey(KeyCode.LeftControl))
         {
-            if (Speed < 50)
+            if (Speed < 100)
             {
                 Speed += 1;
             }

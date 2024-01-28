@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Speichern
 {
-    public static long Kontostand = 20;
+    public static long Kontostand = 200000;
     public static Time Date;
     public static void hallo()
     {
