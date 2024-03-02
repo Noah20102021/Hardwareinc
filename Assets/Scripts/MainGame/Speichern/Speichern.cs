@@ -5,10 +5,8 @@ using UnityEngine;
 public static class Speichern
 {
     public static long Kontostand = 200000;
-    public static Time Date;
-    public static void hallo()
-    {
-        Date = new Time();
-    }
-    
+    public static float M = 00;
+    public static float H = 00;
+    public static float Day = 01;
+
 }

@@ -10,6 +10,7 @@ public class BuildingSystem : MonoBehaviour
     public Button yourButton;
     public GameObject buildingPrefab;
     private GameObject currentBuilding;
+    public GameObject Gridholder;
     public float gridSize;
     public int spielbereichMin;
     public int spielbereichMax;
@@ -28,10 +29,11 @@ public class BuildingSystem : MonoBehaviour
     {
         // Initialisiere die LineRenderer-Objekte
         InitializeGrid();
-        
+        Gridholder.SetActive(false);
     }
-    
-    public void Butten()
+
+    //Fundament
+    public void Butten(GameObject imtobuild)
     {
         if (PlaceOn == true)
         {
@@ -39,12 +41,16 @@ public class BuildingSystem : MonoBehaviour
             GO = false;
             Destroy(currentBuilding);
             currentBuilding = null;
+            Gridholder.SetActive(false);
         }
         else
         {
+            buildingPrefab = imtobuild;
             PlaceOn = true;
             GO = true;
+            Gridholder.SetActive(true);
         }
+        //(●'◡'●))
     }
 
     void Update()
@@ -52,6 +58,31 @@ public class BuildingSystem : MonoBehaviour
         if (PlaceOn == true)
         {
             TryPlaceBuilding();
+        }
+        if (Input.GetMouseButtonUp(1)) 
+        {
+            PlaceOn = false;
+            GO = false;
+            Destroy(currentBuilding);
+            currentBuilding = null;
+            Gridholder.SetActive(false);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            if (PlaceOn == true)
+            {
+                PlaceOn = false;
+                GO = false;
+                Destroy(currentBuilding);
+                currentBuilding = null;
+                Gridholder.SetActive(false);
+            }
+            else
+            {
+                PlaceOn = true;
+                GO = true;
+                Gridholder.SetActive(true);
+            }
         }
     }
 
@@ -78,11 +109,13 @@ Debug.Log ("Erstelle Grid");
 void DrawLine(Vector3 mittelpunkt, Vector3 scale)
 {
     GameObject myLine = new GameObject();
+    
     myLine.transform.position = mittelpunkt;
     myLine.AddComponent<SpriteRenderer>();
     SpriteRenderer lr = myLine.GetComponent<SpriteRenderer>();
+        myLine.transform.parent = Gridholder.transform;
         //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        
+
         lr.sprite=Resources.Load<Sprite>("Square");
         lr.transform.position = mittelpunkt;
         lr.transform.localScale = scale;
@@ -95,6 +128,7 @@ void DrawLine(Vector3 mittelpunkt, Vector3 scale)
 
     void TryPlaceBuilding()
     {
+        
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
 
@@ -111,62 +145,71 @@ void DrawLine(Vector3 mittelpunkt, Vector3 scale)
         }
         else
         {
-            currentBuilding.transform.position = roundedMousePosition;
-            if (Input.GetMouseButtonDown(0)) 
+            if (buildingPrefab.tag == "fundament")
             {
-                Startposition = roundedMousePosition;
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                float Startx, Starty;
-                float Endex, Endey;
-                if(Startposition.x <= roundedMousePosition.x) 
-                {
-                    Startx = Startposition.x;
-                    Endex = roundedMousePosition.x;
-                }
-                else
-                {
-                    Endex = Startposition.x;
-                    Startx = roundedMousePosition.x;
-                }
-                if (Startposition.y <= roundedMousePosition.y)
-                {
-                    Starty = Startposition.y;
-                    Endey = roundedMousePosition.y;
-                }
-                else
-                {
-                    Endey = Startposition.y;
-                    Starty = roundedMousePosition.y;
-                }
-                for (float x = Startx; x <= Endex; x++) 
-                {
-                    for (float y = Starty; y <= Endey; y++)
-                    {
-                        Vector3 Zielposition = new Vector3(x,y,roundedMousePosition.z);
-                        bool colision = false;
-                        for (int i = 0; i < Buildinglist.Count; i++)
-                        {
-                            if (Buildinglist[i].transform.position == Zielposition) { colision = true; }
-                        }
-                            // Hier k�nntest du weitere Logik hinzuf�gen, z.B. �berpr�fung auf Kollisionen oder Ressourcenverf�gbarkeit
-                        if (Speichern.Kontostand >= 2 && GO == true && colision == false)
-                        {
-                            // Geb�ude platzieren
-                            //currentBuilding = null;
-                            Speichern.Kontostand -= 2;
-                            Buildinglist.Add(Instantiate(buildingPrefab, Zielposition, Quaternion.identity));
-                        }
-                    }
-                }
-                
-
-                
+                TryPlaceFundament(roundedMousePosition);
             }
             
+
         }
 
         // Aktualisiere die Positionen der Gitterlinien, sodass sie den ganzen Bildschirm abdecken
-       }
+     }
+    void TryPlaceFundament(Vector3 roundedMousePosition)
+    {
+        currentBuilding.transform.position = roundedMousePosition;
+        if (Input.GetMouseButtonDown(0))
+        {
+            Startposition = roundedMousePosition;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            float Startx, Starty;
+            float Endex, Endey;
+            if (Startposition.x <= roundedMousePosition.x)
+            {
+                Startx = Startposition.x;
+                Endex = roundedMousePosition.x;
+            }
+            else
+            {
+                Endex = Startposition.x;
+                Startx = roundedMousePosition.x;
+            }
+            if (Startposition.y <= roundedMousePosition.y)
+            {
+                Starty = Startposition.y;
+                Endey = roundedMousePosition.y;
+            }
+            else
+            {
+                Endey = Startposition.y;
+                Starty = roundedMousePosition.y;
+            }
+            for (float x = Startx; x <= Endex; x += gridSize)
+            {
+                for (float y = Starty; y <= Endey; y += gridSize)
+                {
+                    Vector3 Zielposition = new Vector3(x, y, roundedMousePosition.z);
+                    bool colision = false;
+                    for (int i = 0; i < Buildinglist.Count; i++)
+                    {
+                        if (Buildinglist[i].transform.position == Zielposition) { colision = true; }
+                    }
+                    // Hier k�nntest du weitere Logik hinzuf�gen, z.B. �berpr�fung auf Kollisionen oder Ressourcenverf�gbarkeit
+                    if (Speichern.Kontostand >= 2 && GO == true && colision == false)
+                    {
+                        Debug.Log("Baue an koordinaten: " + x + "/" + y);
+                        // Geb�ude platzieren
+                        //currentBuilding = null;
+                        Speichern.Kontostand -= 2;
+                        Buildinglist.Add(Instantiate(buildingPrefab, Zielposition, Quaternion.identity));
+                    }
+                }
+            }
+
+
+
+        }
+    }
 }
